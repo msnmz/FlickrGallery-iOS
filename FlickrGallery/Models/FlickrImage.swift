@@ -30,6 +30,10 @@ struct FlickrImage {
         self.isFriend = isFriend
         self.isFamily = isFamily
     }
+    
+    func getKey() -> String {
+        return "\(id)-\(owner)-\(secret)-\(server)-\(farm)"
+    }
 }
 
 extension FlickrImage: Decodable {

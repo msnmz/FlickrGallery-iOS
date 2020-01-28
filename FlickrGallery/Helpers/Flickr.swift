@@ -12,7 +12,7 @@ class Flickr {
     
     static let instance = Flickr() // Singleton
     
-    let API_SEARCH_ENDPOINT = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3e7cc266ae2b0e0d78e279ce8e361736&format=json&nojsoncallback=1&safe_search=1&text="
+    let API_SEARCH_ENDPOINT = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3e7cc266ae2b0e0d78e279ce8e361736&format=json&nojsoncallback=1&safe_search=1"
     
     func getImage(wihtSource source: FlickrImage, withCompletion completion:  @escaping (UIImage?, Error?) -> ()) {
         let API_IMAGE_ENDPOINT = "http://farm\(source.farm).static.flickr.com/\(source.server)/\(source.id)_\(source.secret).jpg"
@@ -29,8 +29,8 @@ class Flickr {
         }
     }
     
-    func searchImages(withQuery query: String, withCompletion completion: @escaping (FlickrSearch?, Error?) -> ()) {
-        let url = URL(string: "\(API_SEARCH_ENDPOINT)\(query)")
+    func searchImages(withQuery query: String, ofPage page: Int, withCompletion completion: @escaping (FlickrSearch?, Error?) -> ()) {
+        let url = URL(string: "\(API_SEARCH_ENDPOINT)&text=\(query)&page=\(page)".trimmingCharacters(in: .whitespaces))
         let request = URLRequest(url: url!)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
